@@ -1,0 +1,15 @@
+
+version: '3'
+services:
+  db:
+    image: "postgres"
+    environment:
+      POSTGRES_DB: "wordCounterDB"
+      POSTGRES_USER: "wordCounterUsername"
+      POSTGRES_PASSWORD: "${WORD_COUNTER_PASSWORD}"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+volumes:
+  db_data:
