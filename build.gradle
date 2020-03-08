@@ -31,8 +31,10 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:1.13.0"
 }
 
-test {
-	useJUnitPlatform()
+task serviceTest {
+    dependsOn("cleanTest")
+    dependsOn(":serviceTest:test")
+    tasks.findByName('cleanTest').mustRunAfter(':serviceTest:test')
 }
 
 docker {

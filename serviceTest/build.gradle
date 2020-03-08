@@ -5,13 +5,24 @@ plugins {
 group 'com.mitchharris'
 version '0.0.1-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
 }
 
+test {
+    testLogging {
+        events "PASSED","FAILED","SKIPPED","STANDARD_ERROR"
+        exceptionFormat = "FULL"
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
+    useJUnitPlatform {}
+}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation('org.springframework.boot:spring-boot-starter-test:2.2.5.RELEASE')
     testImplementation 'io.rest-assured:rest-assured:4.2.0'
 }
