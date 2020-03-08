@@ -11,5 +11,13 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  api:
+    image: "mitchharris/word-counter"
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://db:5432/wordCounterDB'
+
 volumes:
   db_data:
