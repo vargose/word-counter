@@ -27,8 +27,16 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     compile("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly 'org.postgresql:postgresql'
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-test'){
+        exclude group: 'junit', module: 'junit' //by both name and group
+    }
     testImplementation "org.testcontainers:postgresql:1.13.0"
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    testCompile group: 'uk.co.jemos.podam', name: 'podam', version: '7.2.3.RELEASE'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 task serviceTest {

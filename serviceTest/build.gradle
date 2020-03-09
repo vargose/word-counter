@@ -23,6 +23,8 @@ test {
 }
 
 dependencies {
-    testImplementation('org.springframework.boot:spring-boot-starter-test:2.2.5.RELEASE')
+    testImplementation('org.springframework.boot:spring-boot-starter-test:2.2.5.RELEASE'){
+        exclude group: 'junit', module: 'junit' //by both name and group
+    }
     testImplementation 'io.rest-assured:rest-assured:4.2.0'
 }
