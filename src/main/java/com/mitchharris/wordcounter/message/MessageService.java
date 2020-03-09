@@ -14,7 +14,7 @@ public class MessageService {
     private MessageRepository messageRepository;
 
     public MessageWordCount getWordCountOfAllUniqueMessagesIncluding(Message message) {
-        messageRepository.save(new MessageEntity(message));
+        if(!messageRepository.existsById(message.getId())) { messageRepository.save(new MessageEntity(message)); }
         return new MessageWordCount(messageRepository.sumWordCount());
     }
 

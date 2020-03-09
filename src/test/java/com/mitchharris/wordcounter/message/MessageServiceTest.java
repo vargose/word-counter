@@ -38,4 +38,22 @@ class MessageServiceTest {
         inOrder.verify(messageRepository).sumWordCount();
 
     }
+
+    @Test
+    void messageService_ignoresExistingIds_andReturnsSum() {
+
+        String id = "123";
+        Message message = new Message(id, "Hello Dublin");
+        int count = 2;
+        when(messageRepository.existsById(id)).thenReturn(true);
+        when(messageRepository.sumWordCount()).thenReturn(count);
+
+        MessageWordCount actual = messageService.getWordCountOfAllUniqueMessagesIncluding(message);
+
+        assertEquals(new MessageWordCount(count), actual);
+
+        verify(messageRepository, times(0)).save(new MessageEntity(message));
+        verify(messageRepository).sumWordCount();
+
+    }
 }

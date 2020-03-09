@@ -35,7 +35,14 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+    testLogging {
+        events "PASSED","FAILED","SKIPPED","STANDARD_ERROR"
+        exceptionFormat = "FULL"
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
+    useJUnitPlatform {}
 }
 
 task serviceTest {
