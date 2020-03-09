@@ -4,54 +4,38 @@ import com.mitchharris.wordcounter.message.dto.Message;
 import com.mitchharris.wordcounter.message.dto.MessageWordCount;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MessageServiceTest {
+
+    @Mock
+    private MessageRepository messageRepository;
 
     @InjectMocks
     private MessageService messageService;
 
     @Test
-    void countWordsInMessage_returns_NumberOfWordsInString() {
+    void messageService_savesIncomingMessage_andReturnsSum() {
 
-        MessageWordCount messageWordCount = messageService.countWordsInMessage(new Message("123", "Hello Everybody"));
+        Message message = new Message("123", "Hello Dublin");
+        int count = 4;
+        when(messageRepository.sumWordCount()).thenReturn(count);
 
-        assertEquals(new MessageWordCount(2), messageWordCount);
-    }
+        MessageWordCount actual = messageService.getWordCountOfAllUniqueMessagesIncluding(message);
 
-    @Test
-    void countWordsInMessage_returns_NumberOfWordsInString_differentCount() {
+        assertEquals(new MessageWordCount(count), actual);
 
-        MessageWordCount messageWordCount = messageService.countWordsInMessage(new Message("123", "Hello Everybody in St. Louis"));
+        InOrder inOrder = inOrder(messageRepository);
 
-        assertEquals(new MessageWordCount(5), messageWordCount);
-    }
+        inOrder.verify(messageRepository).save(new MessageEntity(message));
+        inOrder.verify(messageRepository).sumWordCount();
 
-    @Test
-    void countWordsInMessage_returns_ZeroForNull() {
-
-        MessageWordCount messageWordCount = messageService.countWordsInMessage(new Message("123", null));
-
-        assertEquals(new MessageWordCount(0), messageWordCount);
-    }
-
-    @Test
-    void countWordsInMessage_returns_ZeroForBlank() {
-
-        MessageWordCount messageWordCount = messageService.countWordsInMessage(new Message("123", ""));
-
-        assertEquals(new MessageWordCount(0), messageWordCount);
-    }
-
-    @Test
-    void countWordsInMessage_returns_ZeroForWhiteWpace() {
-
-        MessageWordCount messageWordCount = messageService.countWordsInMessage(new Message("123", " "));
-
-        assertEquals(new MessageWordCount(0), messageWordCount);
     }
 }

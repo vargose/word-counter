@@ -1,13 +1,18 @@
 package com.mitchharris.wordcounter.message;
 
+import com.mitchharris.wordcounter.message.dto.Message;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
 @Entity(name = "message")
 public class MessageEntity {
+
+    private static final String WHITE_SPACE_REGEX = "\\s+";
 
     @Id
     private String id;
@@ -21,10 +26,19 @@ public class MessageEntity {
     public MessageEntity() {
     }
 
-    public MessageEntity(String id, String messageText, Integer wordCount) {
-        this.id = id;
-        this.messageText = messageText;
-        this.wordCount = Optional.ofNullable(wordCount).orElse(0);
+    public MessageEntity(Message message) {
+        this.id = message.getId();
+        this.messageText = message.getMessage().orElse(null);
+        this.wordCount = getWordCount(message);
+    }
+
+    private Integer getWordCount(Message message) {
+        return message.getMessage().
+                map((messageText) ->
+                        Arrays.stream(
+                                messageText.trim().split(WHITE_SPACE_REGEX)).
+                                filter( (word) -> !word.isBlank() ).toArray().length).
+                orElse(0);
     }
 
     public String getId() {

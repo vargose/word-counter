@@ -3,7 +3,6 @@ package com.mitchharris.wordcounter.message;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mitchharris.wordcounter.message.dto.Message;
 import com.mitchharris.wordcounter.message.dto.MessageWordCount;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -37,7 +34,7 @@ class MessageControllerMvcTest {
         Message message = new Message("123", "Hello London");
 
         MessageWordCount expected = new MessageWordCount(2);
-        when(messageService.countWordsInMessage(message)).thenReturn(expected);
+        when(messageService.getWordCountOfAllUniqueMessagesIncluding(message)).thenReturn(expected);
 
         mockMvc.perform(post("/message")
                 .contentType("application/json")

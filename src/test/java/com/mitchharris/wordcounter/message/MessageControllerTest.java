@@ -27,7 +27,7 @@ class MessageControllerTest {
         Message message = new Message("123", "Hello Everyone");
         MessageWordCount expected = new MessageWordCount(2);
 
-        when(messageService.countWordsInMessage(message)).thenReturn(expected);
+        when(messageService.getWordCountOfAllUniqueMessagesIncluding(message)).thenReturn(expected);
 
         ResponseEntity<MessageWordCount> response = messageController.acceptMessage(message);
 

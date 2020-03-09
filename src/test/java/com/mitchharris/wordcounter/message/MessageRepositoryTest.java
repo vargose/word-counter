@@ -2,6 +2,7 @@ package com.mitchharris.wordcounter.message;
 
 import com.mitchharris.wordcounter.PostgresContainerSingleton;
 import com.mitchharris.wordcounter.PostgresTestInitializer;
+import com.mitchharris.wordcounter.message.dto.Message;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,11 +33,34 @@ class MessageRepositoryTest {
     @Test
     public void testSave_and_findById(){
         String id = "123";
-        MessageEntity messageEntity = new MessageEntity(id, "Hello World", 2);
+        MessageEntity messageEntity = new MessageEntity(new Message(id, "Hello World"));
         messageRepository.save(messageEntity);
         Optional<MessageEntity> foundMessageEntity = messageRepository.findById(id);
 
         assertEquals(Optional.of(messageEntity), foundMessageEntity);
+    }
+
+    @Test
+    public void testSave_and_existsById(){
+        String id = "124";
+        MessageEntity messageEntity = new MessageEntity(new Message(id, "Hello World"));
+        messageRepository.save(messageEntity);
+
+        assertTrue(messageRepository.existsById(id));
+    }
+
+    @Test
+    public void testSum(){
+        messageRepository.deleteAll();
+        MessageEntity messageEntity = new MessageEntity(new Message("124", "Hello World"));
+        messageRepository.save(messageEntity);
+
+        assertEquals(2,messageRepository.sumWordCount());
+
+        MessageEntity messageEntity2 = new MessageEntity(new Message("125", "Hello World"));
+        messageRepository.save(messageEntity2);
+
+        assertEquals(4,messageRepository.sumWordCount());
     }
 
 }
