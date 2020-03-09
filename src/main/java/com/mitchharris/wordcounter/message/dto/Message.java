@@ -1,11 +1,16 @@
 package com.mitchharris.wordcounter.message.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Objects;
 
 public class Message {
 
+    @ApiModelProperty(value = "The id of the message", required = true, example = "123")
     private final String id;
 
+    @ApiModelProperty(value = "The text of the message", example = "Hello World Text")
     private final String message;
 
     public Message(String id, String message) {

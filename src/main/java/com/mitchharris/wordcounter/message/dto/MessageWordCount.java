@@ -1,9 +1,13 @@
 package com.mitchharris.wordcounter.message.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Objects;
 
 public class MessageWordCount {
 
+    @ApiModelProperty(value = "count of words received", required = true, example = "3")
     private final Integer count;
 
     public MessageWordCount(Integer count) {
