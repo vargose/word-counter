@@ -30,4 +30,28 @@ class MessageServiceTest {
 
         assertEquals(new MessageWordCount(5), messageWordCount);
     }
+
+    @Test
+    void countWordsInMessage_returns_ZeroForNull() {
+
+        MessageWordCount messageWordCount = messageService.countWordsInMessage(new Message("123", null));
+
+        assertEquals(new MessageWordCount(0), messageWordCount);
+    }
+
+    @Test
+    void countWordsInMessage_returns_ZeroForBlank() {
+
+        MessageWordCount messageWordCount = messageService.countWordsInMessage(new Message("123", ""));
+
+        assertEquals(new MessageWordCount(0), messageWordCount);
+    }
+
+    @Test
+    void countWordsInMessage_returns_ZeroForWhiteWpace() {
+
+        MessageWordCount messageWordCount = messageService.countWordsInMessage(new Message("123", " "));
+
+        assertEquals(new MessageWordCount(0), messageWordCount);
+    }
 }

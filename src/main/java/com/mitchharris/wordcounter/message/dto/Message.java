@@ -3,11 +3,14 @@ package com.mitchharris.wordcounter.message.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Message {
 
     @ApiModelProperty(value = "The id of the message", required = true, example = "123")
+    @NotBlank(message = "Message id cannot be blank")
     private final String id;
 
     @ApiModelProperty(value = "The text of the message", example = "Hello World Text")
@@ -22,8 +25,8 @@ public class Message {
         return id;
     }
 
-    public String getMessage() {
-        return message;
+    public Optional<String> getMessage() {
+        return Optional.ofNullable(message);
     }
 
     @Override
@@ -31,8 +34,8 @@ public class Message {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message1 = (Message) o;
-        return id.equals(message1.id) &&
-                message.equals(message1.message);
+        return Objects.equals(id, message1.id) &&
+                Objects.equals(message, message1.message);
     }
 
     @Override
