@@ -74,5 +74,25 @@ class MessageControllerMvcTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void whenValidInput_tooBigId_Returns400() throws Exception {
+        Message message = new Message("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus suscipit facilisis. Praesent egestas tincidunt faucibus. Vestibulum mollis maximus massa eget pellentesque. Maecenas magna augue, malesuada ac mi mollis, feugiat volutpat augue. Nam metus. ", "Hello London");
+
+        mockMvc.perform(post("/message")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(message)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenValidInput_tooBigMessage_Returns400() throws Exception {
+        Message message = new Message("123", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus suscipit facilisis. Praesent egestas tincidunt faucibus. Vestibulum mollis maximus massa eget pellentesque. Maecenas magna augue, malesuada ac mi mollis, feugiat volutpat augue. Nam metus. ");
+
+        mockMvc.perform(post("/message")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(message)))
+                .andExpect(status().isBadRequest());
+    }
+
 
 }
