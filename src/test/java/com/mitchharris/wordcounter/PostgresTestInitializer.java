@@ -20,28 +20,3 @@ public class PostgresTestInitializer implements ApplicationContextInitializer<Co
 
 }
 
-class PostgresContainerSingleton {
-
-    private static PostgresContainerSingleton instance = null;
-
-    private final PostgreSQLContainer postgreSQLContainer = (PostgreSQLContainer) new PostgreSQLContainer("postgres")
-            .withDatabaseName("testDB")
-            .withUsername("testUser")
-            .withPassword("testPassword");
-
-    void startContainer(){
-        postgreSQLContainer.start();
-    }
-
-    static PostgresContainerSingleton getInstance(){
-        if (instance == null) {
-            instance = new PostgresContainerSingleton();
-        }
-        return instance;
-    }
-
-    PostgreSQLContainer getPostgreSQLContainer() {
-        return postgreSQLContainer;
-    }
-}
-

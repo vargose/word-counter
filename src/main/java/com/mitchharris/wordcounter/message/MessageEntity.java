@@ -10,13 +10,16 @@ import java.util.Optional;
 public class MessageEntity {
 
     @Id
-    private final String id;
+    private String id;
 
     @Column
-    private final String messageText;
+    private String messageText;
 
     @Column(nullable = false)
-    private final Integer wordCount;
+    private Integer wordCount;
+
+    public MessageEntity() {
+    }
 
     public MessageEntity(String id, String messageText, Integer wordCount) {
         this.id = id;
