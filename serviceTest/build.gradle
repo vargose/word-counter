@@ -12,6 +12,7 @@ repositories {
 }
 
 test {
+    dependsOn("cleanTest")
     testLogging {
         events "PASSED","FAILED","SKIPPED","STANDARD_ERROR"
         exceptionFormat = "FULL"
@@ -20,6 +21,10 @@ test {
         showStackTraces = true
     }
     useJUnitPlatform {}
+
+    onlyIf {
+        project.hasProperty("serviceTest")
+    }
 }
 
 dependencies {
