@@ -27,3 +27,13 @@ There are a suite of end to end test built with Rest Assured in the serviceTest 
 2. `gradlew test -PserviceTest --rerun-tasks` 
 3. results appear `serviceTest/build/reports/tests/test/index.html`
 4. They are JUnit based so you can also run the from your favorite IDE
+
+#### Features Explained
+1. Using Spring Boot as the base level framework to take advantage of the MVC and ORM it provides
+2. Using Spring Data Jpa to interface with the database
+3. Using Docker to easily run the api and database
+4. Using Spring WebMvcTest to test endpoint mappings, json serialization and deserialization, and request payload Validations
+5. Using Spring DataJpaTest to test entity mappings and repository calls
+6. Using Test Containers to run a real postgres docker container for DataJpaTest tests and the Application start test
+7. All other functionality has been covered by Unit tests
+8. Using Rest Assured for end-2-end tests
